@@ -1,8 +1,48 @@
+import { findAllByTestId } from "@testing-library/react"
+import { SMURF_FETCH, SMURF_SUCCESS, SMURF_FAIL, SMURF_ADD, SMURF_ERROR } from '../actions/index'
 
 export const initialState = {
+    smurfs: [],
+    isFetching: false,
+    error: '',
 }
 
-const reducer = ()=>{
+const reducer = (state = initialState, action)=>{
+    switch(action.type){
+        case(SMURF_FETCH):
+            return({
+                ...state,
+                isFetching: true,
+                error: ''
+            });
+        case(SMURF_SUCCESS):
+            return({
+                ...state,
+                smurfs: action.payload,
+                isFetching: false
+            });
+        case(SMURF_FAIL):
+            return({
+                ...state,
+                error: action.payload,
+                isFetching: false
+            });
+        case(SMURF_ADD):
+            return({
+                ...state,
+                smurf: action.payload,
+                isFetching: false,
+                error:''
+            });
+        case(SMURF_ERROR):
+            return({
+                ...state,
+                isFetching:false,
+                error: action.payload
+            })
+        default:
+            return state;
+    }
 }
 
 //**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
